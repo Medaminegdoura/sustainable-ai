@@ -111,18 +111,56 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Advanced Features Highlight */}
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl shadow-lg p-8 border-2 border-primary-200">
+          <div className="flex items-center justify-center mb-4">
+            <span className="text-4xl">🚀</span>
+            <h3 className="text-2xl font-bold text-gray-800 ml-3">NEW: Advanced Simulator</h3>
+          </div>
+          <p className="text-center text-gray-700 mb-6">
+            Unlock powerful features: Multi-party negotiations, custom metrics, risk analysis, iterative rounds, and more!
+          </p>
+          <div className="grid md:grid-cols-4 gap-4 text-center">
+            <div className="bg-white/60 rounded-lg p-3">
+              <div className="text-2xl mb-1">👥</div>
+              <p className="text-sm font-semibold text-gray-700">2-5 Parties</p>
+            </div>
+            <div className="bg-white/60 rounded-lg p-3">
+              <div className="text-2xl mb-1">🎯</div>
+              <p className="text-sm font-semibold text-gray-700">Custom Metrics</p>
+            </div>
+            <div className="bg-white/60 rounded-lg p-3">
+              <div className="text-2xl mb-1">⚠️</div>
+              <p className="text-sm font-semibold text-gray-700">Risk Analysis</p>
+            </div>
+            <div className="bg-white/60 rounded-lg p-3">
+              <div className="text-2xl mb-1">🔄</div>
+              <p className="text-sm font-semibold text-gray-700">Iterative Rounds</p>
+            </div>
+          </div>
+        </div>
+
         {/* CTA Section */}
         <div className="text-center mt-16">
           <p className="text-lg text-gray-700 mb-6">
             Ready to experience AI-powered sustainable negotiations?
           </p>
-          <Button
-            size="lg"
-            variant="primary"
-            onClick={() => router.push('/setup')}
-          >
-            Get Started Now →
-          </Button>
+          <div className="flex gap-4 justify-center">
+            <Button
+              size="lg"
+              variant="primary"
+              onClick={() => router.push('/setup')}
+            >
+              Quick Start →
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => router.push('/advanced-setup')}
+            >
+              🚀 Advanced Mode
+            </Button>
+          </div>
         </div>
       </main>
 
