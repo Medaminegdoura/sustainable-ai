@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { AdvancedOpenAiService } from './advanced-openai.service';
+import { EmpathyMappingService } from './empathy-mapping.service';
 import { AdvancedSimulationRequestDto } from '../dto/advanced-simulation-request.dto';
 
 interface Scores {
@@ -21,6 +22,36 @@ interface RiskAssessment {
   confidenceScore: number;
 }
 
+interface EmpathyInsight {
+  partyName: string;
+  emotionalNeeds: string[];
+  communicationRecommendations: string[];
+  conflictRisks: string[];
+  bridgingStrategies: string[];
+}
+
+interface SentimentAnalysis {
+  overallSentiment: 'positive' | 'neutral' | 'negative';
+  emotionalTone: string;
+  empathyScore: number;
+  inclusivityScore: number;
+  recommendations: string[];
+}
+
+interface PowerBalanceReport {
+  currentDynamics: string;
+  imbalances: string[];
+  balancingStrategies: string[];
+  equityScore: number;
+}
+
+interface CulturalBridge {
+  culturalTensions: string[];
+  communicationAdjustments: string[];
+  protocolRecommendations: string[];
+  successFactors: string[];
+}
+
 interface AdvancedSimulationResponse {
   economic_compromise: string;
   social_compromise: string;
@@ -32,13 +63,20 @@ interface AdvancedSimulationResponse {
   alternativeOptions?: string[];
   negotiationRoundNumber?: number;
   improvementSuggestions?: string[];
+  empathyInsights?: EmpathyInsight[];
+  sentimentAnalysis?: SentimentAnalysis;
+  powerBalanceReport?: PowerBalanceReport;
+  culturalBridge?: CulturalBridge;
 }
 
 @Injectable()
 export class AdvancedNegotiationService {
   private readonly logger = new Logger(AdvancedNegotiationService.name);
 
-  constructor(private advancedOpenAiService: AdvancedOpenAiService) {}
+  constructor(
+    private advancedOpenAiService: AdvancedOpenAiService,
+    private empathyMappingService: EmpathyMappingService,
+  ) {}
 
   async runAdvancedSimulation(
     data: AdvancedSimulationRequestDto,
@@ -90,6 +128,33 @@ export class AdvancedNegotiationService {
 
       // Add alternative options for flexibility
       response.alternativeOptions = this.generateAlternativeOptions(data, response);
+
+      // INNOVATIVE: Add empathy mapping features
+      if (data.enableEmpathyMapping) {
+        this.logger.log('Generating empathy insights...');
+        response.empathyInsights = await this.empathyMappingService.generateEmpathyInsights(data);
+      }
+
+      // INNOVATIVE: Sentiment analysis of balanced compromise
+      if (data.enableSentimentAnalysis) {
+        this.logger.log('Analyzing sentiment...');
+        response.sentimentAnalysis = await this.empathyMappingService.analyzeSentiment(
+          balancedCompromise,
+          data,
+        );
+      }
+
+      // INNOVATIVE: Power balance analysis
+      if (data.enablePowerBalancing) {
+        this.logger.log('Analyzing power dynamics...');
+        response.powerBalanceReport = await this.empathyMappingService.analyzePowerBalance(data);
+      }
+
+      // INNOVATIVE: Cultural bridging
+      if (data.enableCulturalBridging) {
+        this.logger.log('Generating cultural bridge...');
+        response.culturalBridge = await this.empathyMappingService.generateCulturalBridge(data);
+      }
 
       this.logger.log('Advanced simulation completed successfully');
       return response;

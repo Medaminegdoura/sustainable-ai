@@ -17,6 +17,7 @@ export interface AdvancedParty {
   constraints: string;
   advancedConstraints?: AdvancedConstraint;
   individualEsgPriorities?: ESG;
+  empathyProfile?: EmpathyProfile;
 }
 
 export interface Party {
@@ -59,6 +60,10 @@ export interface AdvancedSimulationRequest {
   includeMitigationStrategies?: boolean;
   negotiationRound?: number;
   previousRoundFeedback?: string;
+  enableEmpathyMapping?: boolean;
+  enableSentimentAnalysis?: boolean;
+  enablePowerBalancing?: boolean;
+  enableCulturalBridging?: boolean;
 }
 
 export interface RiskAssessment {
@@ -87,6 +92,53 @@ export interface SimulationResponse {
   scores: Scores;
 }
 
+export interface EmpathyInsight {
+  partyName: string;
+  emotionalNeeds: string[];
+  communicationRecommendations: string[];
+  conflictRisks: string[];
+  bridgingStrategies: string[];
+}
+
+export interface SentimentAnalysis {
+  overallSentiment: 'positive' | 'neutral' | 'negative';
+  emotionalTone: string;
+  empathyScore: number;
+  inclusivityScore: number;
+  recommendations: string[];
+}
+
+export interface PowerBalanceReport {
+  currentDynamics: string;
+  imbalances: string[];
+  balancingStrategies: string[];
+  equityScore: number;
+}
+
+export interface CulturalBridge {
+  culturalTensions: string[];
+  communicationAdjustments: string[];
+  protocolRecommendations: string[];
+  successFactors: string[];
+}
+
+export type EmotionalState = 'collaborative' | 'defensive' | 'aggressive' | 'anxious' | 'optimistic' | 'skeptical' | 'desperate' | 'confident';
+export type PowerDynamic = 'equal' | 'dominant' | 'subordinate' | 'dependent' | 'independent';
+export type NegotiationStyle = 'competing' | 'collaborating' | 'compromising' | 'avoiding' | 'accommodating';
+export type CulturalContextType = 'western-direct' | 'eastern-indirect' | 'middle-eastern' | 'latin-american' | 'african' | 'scandinavian' | 'multicultural';
+
+export interface EmpathyProfile {
+  emotionalState?: EmotionalState;
+  powerDynamic?: PowerDynamic;
+  negotiationStyle?: NegotiationStyle;
+  culturalContext?: CulturalContextType;
+  emotionalTriggers?: string[];
+  coreValues?: string[];
+  pastExperiences?: string;
+  trustLevel?: number;
+  stressLevel?: number;
+}
+
 export interface AdvancedSimulationResponse extends SimulationResponse {
   riskAssessment?: RiskAssessment;
   customMetricScores?: CustomMetricScore[];
@@ -94,4 +146,9 @@ export interface AdvancedSimulationResponse extends SimulationResponse {
   alternativeOptions?: string[];
   negotiationRoundNumber?: number;
   improvementSuggestions?: string[];
+  empathyInsights?: EmpathyInsight[];
+  sentimentAnalysis?: SentimentAnalysis;
+  powerBalanceReport?: PowerBalanceReport;
+  culturalBridge?: CulturalBridge;
+  proposals?: string[];
 }

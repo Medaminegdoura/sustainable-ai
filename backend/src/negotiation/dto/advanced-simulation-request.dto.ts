@@ -26,6 +26,43 @@ export enum IndustryType {
   GENERAL = 'general',
 }
 
+export enum EmotionalState {
+  COLLABORATIVE = 'collaborative',
+  DEFENSIVE = 'defensive',
+  AGGRESSIVE = 'aggressive',
+  ANXIOUS = 'anxious',
+  OPTIMISTIC = 'optimistic',
+  SKEPTICAL = 'skeptical',
+  DESPERATE = 'desperate',
+  CONFIDENT = 'confident',
+}
+
+export enum PowerDynamic {
+  EQUAL = 'equal',
+  DOMINANT = 'dominant',
+  SUBORDINATE = 'subordinate',
+  DEPENDENT = 'dependent',
+  INDEPENDENT = 'independent',
+}
+
+export enum NegotiationStyle {
+  COMPETING = 'competing',
+  COLLABORATING = 'collaborating',
+  COMPROMISING = 'compromising',
+  AVOIDING = 'avoiding',
+  ACCOMMODATING = 'accommodating',
+}
+
+export enum CulturalContext {
+  WESTERN_DIRECT = 'western-direct',
+  EASTERN_INDIRECT = 'eastern-indirect',
+  MIDDLE_EASTERN = 'middle-eastern',
+  LATIN_AMERICAN = 'latin-american',
+  AFRICAN = 'african',
+  SCANDINAVIAN = 'scandinavian',
+  MULTICULTURAL = 'multicultural',
+}
+
 export class ConstraintDto {
   @IsOptional()
   @IsArray()
@@ -79,6 +116,50 @@ export class EsgDto {
   governance: number;
 }
 
+export class EmpathyProfileDto {
+  @IsOptional()
+  @IsEnum(EmotionalState)
+  emotionalState?: EmotionalState;
+
+  @IsOptional()
+  @IsEnum(PowerDynamic)
+  powerDynamic?: PowerDynamic;
+
+  @IsOptional()
+  @IsEnum(NegotiationStyle)
+  negotiationStyle?: NegotiationStyle;
+
+  @IsOptional()
+  @IsEnum(CulturalContext)
+  culturalContext?: CulturalContext;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  emotionalTriggers?: string[]; // Things that upset/motivate this party
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  coreValues?: string[]; // Fundamental beliefs (e.g., "fairness", "tradition", "innovation")
+
+  @IsOptional()
+  @IsString()
+  pastExperiences?: string; // Relevant history that shapes their perspective
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  trustLevel?: number; // Trust in other parties (0-100)
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  stressLevel?: number; // Current stress/pressure (0-100)
+}
+
 export class AdvancedPartyDto {
   @IsString()
   @IsNotEmpty()
@@ -101,6 +182,11 @@ export class AdvancedPartyDto {
   @Type(() => EsgDto)
   @IsOptional()
   individualEsgPriorities?: EsgDto; // Each party can have different ESG priorities
+
+  @ValidateNested()
+  @Type(() => EmpathyProfileDto)
+  @IsOptional()
+  empathyProfile?: EmpathyProfileDto; // INNOVATIVE: Emotional intelligence profile
 }
 
 
@@ -173,4 +259,20 @@ export class AdvancedSimulationRequestDto {
   @IsOptional()
   @IsString()
   previousRoundFeedback?: string; // Feedback from previous round
+
+  @IsOptional()
+  @IsBoolean()
+  enableEmpathyMapping?: boolean; // INNOVATIVE: Enable emotional intelligence analysis
+
+  @IsOptional()
+  @IsBoolean()
+  enableSentimentAnalysis?: boolean; // Analyze emotional tone of proposals
+
+  @IsOptional()
+  @IsBoolean()
+  enablePowerBalancing?: boolean; // Suggest ways to balance power dynamics
+
+  @IsOptional()
+  @IsBoolean()
+  enableCulturalBridging?: boolean; // Bridge cultural communication differences
 }

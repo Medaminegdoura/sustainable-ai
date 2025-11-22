@@ -8,6 +8,7 @@ const navigation = [
   { name: 'Home', href: '/' },
   { name: 'New Simulation', href: '/setup' },
   { name: 'Advanced', href: '/advanced-setup' },
+  { name: 'Empathy AI', href: '/empathy-mapping' },
   { name: 'History', href: '/history' },
   { name: 'Templates', href: '/templates' },
   { name: 'Analytics', href: '/analytics' },
