@@ -86,7 +86,7 @@ export default function Home() {
               <div>
                 <h4 className="font-semibold text-gray-800 mb-1">Input Negotiation Parameters</h4>
                 <p className="text-gray-600">
-                  Define both parties' goals, constraints, and ESG priorities.
+                  {`Define both parties' goals, constraints, and ESG priorities`}
                 </p>
               </div>
             </div>
