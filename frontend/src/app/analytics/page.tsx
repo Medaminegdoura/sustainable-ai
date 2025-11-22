@@ -329,7 +329,7 @@ export default function AnalyticsPage() {
               <div>
                 <h4 className="font-semibold text-gray-800">Performance Summary</h4>
                 <p className="text-gray-600">
-                  You've completed {analytics.totalNegotiations} negotiations with an average
+                  You ve completed {analytics.totalNegotiations} negotiations with an average
                   score of{' '}
                   {Math.round(
                     (analytics.stats.averages.economic +

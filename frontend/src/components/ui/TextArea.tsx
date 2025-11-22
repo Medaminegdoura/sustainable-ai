@@ -1,16 +1,18 @@
 import React from 'react';
 
 interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label: string;
+  label?: string;
   error?: string;
 }
 
 export const TextArea: React.FC<TextAreaProps> = ({ label, error, className = '', ...props }) => {
   return (
     <div className="mb-4">
-      <label className="block text-sm font-semibold text-gray-700 mb-2">
-        {label}
-      </label>
+      {label && (
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          {label}
+        </label>
+      )}
       <textarea
         className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none ${
           error ? 'border-red-500' : 'border-gray-300'

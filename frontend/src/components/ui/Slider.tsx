@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface SliderProps {
-  label: string;
+  label?: string;
   value: number;
   onChange: (value: number) => void;
   min?: number;
@@ -20,7 +20,7 @@ export const Slider: React.FC<SliderProps> = ({
   return (
     <div className="mb-6">
       <div className="flex justify-between items-center mb-2">
-        <label className="text-sm font-semibold text-gray-700">{label}</label>
+        {label && <label className="text-sm font-semibold text-gray-700">{label}</label>}
         <span className="text-lg font-bold text-primary-600">{value}</span>
       </div>
       <input

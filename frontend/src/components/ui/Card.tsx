@@ -4,11 +4,12 @@ interface CardProps {
   children: React.ReactNode;
   className?: string;
   title?: string;
+  onClick?: () => void;
 }
 
-export const Card: React.FC<CardProps> = ({ children, className = '', title }) => {
+export const Card: React.FC<CardProps> = ({ children, className = '', title, onClick }) => {
   return (
-    <div className={`bg-white rounded-xl shadow-lg p-6 ${className}`}>
+    <div className={`bg-white rounded-xl shadow-lg p-6 ${className}`} onClick={onClick}>
       {title && <h3 className="text-xl font-bold mb-4 text-gray-800">{title}</h3>}
       {children}
     </div>

@@ -463,7 +463,7 @@ export default function EmpathyMappingPage() {
 
           {/* What You'll Get */}
           <Card className="bg-gradient-to-r from-purple-100 to-blue-100 border-purple-300">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">🎁 What You'll Receive:</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-4">🎁 What You ll Receive:</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
                 <span className="text-2xl">🎭</span>

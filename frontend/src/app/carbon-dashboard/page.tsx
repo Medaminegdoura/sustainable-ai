@@ -92,7 +92,7 @@ export default function CarbonDashboardPage() {
             🌱 Carbon Footprint Dashboard
           </h1>
           <p className="text-lg text-gray-600">
-            Track and optimize your AI's environmental impact
+            Track and optimize your AI s environmental impact
           </p>
         </div>
 
@@ -250,7 +250,7 @@ export default function CarbonDashboardPage() {
         {/* Carbon Offset Options */}
         <Card className="mb-8" title="🌳 Carbon Offset Options">
           <p className="text-gray-600 mb-4">
-            Take action to neutralize your AI's carbon footprint:
+            Take action to neutralize your AI s carbon footprint:
           </p>
           <div className="grid md:grid-cols-3 gap-4">
             <div className="p-4 bg-green-50 rounded-lg border-2 border-green-300">
