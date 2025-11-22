@@ -117,6 +117,7 @@ export default function EmpathyMappingPage() {
         enableSentimentAnalysis: true,
         enablePowerBalancing: true,
         enableCulturalBridging: true,
+        trackCarbonFootprint: true,
         negotiationRound: 1,
       };
 

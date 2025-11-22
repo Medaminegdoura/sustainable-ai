@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { AdvancedOpenAiService } from './advanced-openai.service';
 import { EmpathyMappingService } from './empathy-mapping.service';
+import { CarbonFootprintService, CarbonMetrics, GreenAIRecommendation } from './carbon-footprint.service';
 import { AdvancedSimulationRequestDto } from '../dto/advanced-simulation-request.dto';
 
 interface Scores {
@@ -67,6 +68,8 @@ interface AdvancedSimulationResponse {
   sentimentAnalysis?: SentimentAnalysis;
   powerBalanceReport?: PowerBalanceReport;
   culturalBridge?: CulturalBridge;
+  carbonFootprint?: CarbonMetrics;
+  greenAIRecommendations?: GreenAIRecommendation[];
 }
 
 @Injectable()
@@ -76,6 +79,7 @@ export class AdvancedNegotiationService {
   constructor(
     private advancedOpenAiService: AdvancedOpenAiService,
     private empathyMappingService: EmpathyMappingService,
+    private carbonFootprintService: CarbonFootprintService,
   ) {}
 
   async runAdvancedSimulation(
@@ -154,6 +158,26 @@ export class AdvancedNegotiationService {
       if (data.enableCulturalBridging) {
         this.logger.log('Generating cultural bridge...');
         response.culturalBridge = await this.empathyMappingService.generateCulturalBridge(data);
+      }
+
+      // INNOVATIVE: Carbon footprint tracking
+      if (data.trackCarbonFootprint) {
+        this.logger.log('Calculating carbon footprint...');
+        const executionTimeMs = Date.now(); // Simplified - should track from start
+        const estimatedTokens = this.estimateTokenUsage(data, response);
+        const modelUsed = data.aiConfig?.model || 'gpt-4o-mini';
+        const participantCount = data.parties.length;
+
+        response.carbonFootprint = this.carbonFootprintService.calculateCarbonFootprint(
+          modelUsed,
+          estimatedTokens,
+          executionTimeMs,
+          participantCount,
+        );
+
+        response.greenAIRecommendations = this.carbonFootprintService.getDetailedRecommendations(
+          response.carbonFootprint,
+        );
       }
 
       this.logger.log('Advanced simulation completed successfully');
@@ -323,5 +347,41 @@ export class AdvancedNegotiationService {
    */
   private getRandomAdjustment(range: number = 15): number {
     return (Math.random() - 0.5) * range;
+  }
+
+  /**
+   * Estimate token usage based on request and response
+   */
+  private estimateTokenUsage(data: AdvancedSimulationRequestDto, response: AdvancedSimulationResponse): number {
+    let tokens = 0;
+
+    // Estimate input tokens
+    tokens += data.parties.reduce((sum, party) => {
+      return sum + party.name.length + party.goals.length + party.constraints.length;
+    }, 0) / 4; // Rough estimate: 4 chars per token
+
+    // Estimate output tokens from responses
+    tokens += (response.economic_compromise.length +
+      response.social_compromise.length +
+      response.balanced_compromise.length) / 4;
+
+    // Add tokens for optional features
+    if (response.empathyInsights) {
+      tokens += response.empathyInsights.length * 100; // Estimate per insight
+    }
+    if (response.sentimentAnalysis) {
+      tokens += 200;
+    }
+    if (response.powerBalanceReport) {
+      tokens += 150;
+    }
+    if (response.culturalBridge) {
+      tokens += 200;
+    }
+    if (response.riskAssessment) {
+      tokens += 150;
+    }
+
+    return Math.ceil(tokens);
   }
 }

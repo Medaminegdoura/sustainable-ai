@@ -275,4 +275,8 @@ export class AdvancedSimulationRequestDto {
   @IsOptional()
   @IsBoolean()
   enableCulturalBridging?: boolean; // Bridge cultural communication differences
+
+  @IsOptional()
+  @IsBoolean()
+  trackCarbonFootprint?: boolean; // INNOVATIVE: Track carbon footprint and provide green AI recommendations
 }

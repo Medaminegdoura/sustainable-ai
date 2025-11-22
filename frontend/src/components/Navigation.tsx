@@ -9,6 +9,7 @@ const navigation = [
   { name: 'New Simulation', href: '/setup' },
   { name: 'Advanced', href: '/advanced-setup' },
   { name: 'Empathy AI', href: '/empathy-mapping' },
+  { name: '🌱 Carbon', href: '/carbon-dashboard' },
   { name: 'History', href: '/history' },
   { name: 'Templates', href: '/templates' },
   { name: 'Analytics', href: '/analytics' },

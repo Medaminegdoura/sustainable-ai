@@ -5,6 +5,7 @@ import { OpenAiService } from './services/openai.service';
 import { AdvancedNegotiationService } from './services/advanced-negotiation.service';
 import { AdvancedOpenAiService } from './services/advanced-openai.service';
 import { EmpathyMappingService } from './services/empathy-mapping.service';
+import { CarbonFootprintService } from './services/carbon-footprint.service';
 
 @Module({
   controllers: [NegotiationController],
@@ -14,6 +15,7 @@ import { EmpathyMappingService } from './services/empathy-mapping.service';
     AdvancedNegotiationService, 
     AdvancedOpenAiService,
     EmpathyMappingService,
+    CarbonFootprintService,
   ],
 })
 export class NegotiationModule {}

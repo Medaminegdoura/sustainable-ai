@@ -64,6 +64,7 @@ export interface AdvancedSimulationRequest {
   enableSentimentAnalysis?: boolean;
   enablePowerBalancing?: boolean;
   enableCulturalBridging?: boolean;
+  trackCarbonFootprint?: boolean;
 }
 
 export interface RiskAssessment {
@@ -139,6 +140,32 @@ export interface EmpathyProfile {
   stressLevel?: number;
 }
 
+export interface CarbonMetrics {
+  totalCO2Grams: number;
+  energyKWh: number;
+  tokenCount: number;
+  modelUsed: string;
+  executionTimeMs: number;
+  greenScore: number;
+  equivalentMetrics: {
+    treeHoursNeeded: number;
+    drivingMeters: number;
+    smartphoneCharges: number;
+    lightBulbHours: number;
+  };
+  recommendations: string[];
+  carbonSavingsVsTraditional: number;
+}
+
+export interface GreenAIRecommendation {
+  category: 'model-selection' | 'optimization' | 'caching' | 'timing' | 'offset';
+  priority: 'high' | 'medium' | 'low';
+  title: string;
+  description: string;
+  potentialSavingsCO2Grams: number;
+  implementationDifficulty: 'easy' | 'medium' | 'hard';
+}
+
 export interface AdvancedSimulationResponse extends SimulationResponse {
   riskAssessment?: RiskAssessment;
   customMetricScores?: CustomMetricScore[];
@@ -151,4 +178,6 @@ export interface AdvancedSimulationResponse extends SimulationResponse {
   powerBalanceReport?: PowerBalanceReport;
   culturalBridge?: CulturalBridge;
   proposals?: string[];
+  carbonFootprint?: CarbonMetrics;
+  greenAIRecommendations?: GreenAIRecommendation[];
 }
