@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Navigation } from '@/components/Navigation';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { exportService } from '@/lib/export';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import type { SimulationResponse, SimulationRequest } from '@/types/negotiation';
@@ -15,6 +17,8 @@ export default function ResultsPage() {
   const router = useRouter();
   const [result, setResult] = useState<SimulationResponse | null>(null);
   const [request, setRequest] = useState<SimulationRequest | null>(null);
+  const [showExportMenu, setShowExportMenu] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
 
   useEffect(() => {
     // Load results from sessionStorage
@@ -82,16 +86,34 @@ export default function ResultsPage() {
     router.push('/setup');
   };
 
+  const handleExportJSON = () => {
+    if (result && request) {
+      exportService.exportJSON(request, result);
+      setShowExportMenu(false);
+    }
+  };
+
+  const handleExportText = () => {
+    if (result && request) {
+      exportService.exportText(request, result);
+      setShowExportMenu(false);
+    }
+  };
+
+  const handleCopyToClipboard = async () => {
+    if (result && request) {
+      const success = await exportService.copyToClipboard(request, result);
+      if (success) {
+        setCopySuccess(true);
+        setTimeout(() => setCopySuccess(false), 2000);
+      }
+      setShowExportMenu(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <h1 className="text-3xl font-bold text-primary-700 cursor-pointer" onClick={() => router.push('/')}>
-            🌱 Sustainable Negotiation AI
-          </h1>
-        </div>
-      </header>
+      <Navigation />
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -174,10 +196,37 @@ export default function ResultsPage() {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center gap-4 flex-wrap">
           <Button variant="outline" onClick={() => router.push('/')}>
             ← Home
           </Button>
+          <div className="relative">
+            <Button variant="outline" onClick={() => setShowExportMenu(!showExportMenu)}>
+              📥 Export
+            </Button>
+            {showExportMenu && (
+              <div className="absolute bottom-full mb-2 left-0 bg-white rounded-lg shadow-xl border border-gray-200 py-2 min-w-[200px] z-10">
+                <button
+                  onClick={handleExportJSON}
+                  className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-700"
+                >
+                  Export as JSON
+                </button>
+                <button
+                  onClick={handleExportText}
+                  className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-700"
+                >
+                  Export as Text
+                </button>
+                <button
+                  onClick={handleCopyToClipboard}
+                  className="w-full text-left px-4 py-2 hover:bg-gray-100 text-gray-700"
+                >
+                  {copySuccess ? '✓ Copied!' : 'Copy to Clipboard'}
+                </button>
+              </div>
+            )}
+          </div>
           <Button onClick={handleRunAgain}>
             Run Another Simulation
           </Button>
